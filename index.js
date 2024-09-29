@@ -15,6 +15,44 @@ let playerChoice;
 
 let computerNumber;
 
+let playerScore = 0;
+
+let computerScore = 0;
+
+const body = document.querySelector("#body");
+
+const welcomeMessage = document.createElement("h3");
+const result = document.createElement("div");
+const btns = document.createElement("div");
+const line = document.createElement("div");
+const rockBtn = document.createElement("button");
+const paperBtn = document.createElement("button");
+const scissorsBtn = document.createElement("button");
+
+welcomeMessage.textContent = 'Welcome to Rock Paper Scissors!';
+
+rockBtn.textContent = "Rock";
+rockBtn.addEventListener("click", () => compareChoices(getComputerChoice(), "rock"));
+
+paperBtn.textContent = "Paper";
+paperBtn.addEventListener("click", () => compareChoices(getComputerChoice(), "paper"));
+
+scissorsBtn.textContent = "Scissors";
+scissorsBtn.addEventListener("click", () => compareChoices(getComputerChoice(), "scissors"));
+
+line.textContent = "---------------"
+
+btns.appendChild(rockBtn);
+btns.appendChild(paperBtn);
+btns.appendChild(scissorsBtn);
+body.appendChild(welcomeMessage);
+body.appendChild(btns);
+body.appendChild(line);
+body.appendChild(result);
+
+
+
+
 let getComputerChoice = () => {
     computerNumber = Math.floor(Math.random() * 3) + 1
     if (computerNumber == 1) {
@@ -28,6 +66,7 @@ let getComputerChoice = () => {
     return computerChoice;
 }
 
+/*
 let getPlayerChoice = () => {
     let validAnswer = false;
     while(validAnswer == false) {
@@ -48,28 +87,53 @@ let getPlayerChoice = () => {
     }
     return playerChoice;
 }
+*/
 
+const checkVictory = (pScore, cScore) => {
+    let victory;
+    if (pScore == 5) {
+        victory = "Congrats you beat the computer!";
+        computerScore = 0;
+        playerScore = 0;
+    } else if (cScore == 5) {
+        victory = "The computer wins! Better luck next time!";
+        computerScore = 0;
+        playerScore = 0;
+    } else {
+        victory = ""
+    }
+
+    return ` | Player Score: ${pScore} | Computer Score: ${cScore} | ${victory}`
+}
 
 let compareChoices = (computerChoice, playerChoice) => {
     if (computerChoice === playerChoice) {
-        alert("Its a tie!")
+        result.textContent = "Its a tie!" + checkVictory(playerScore, computerScore);
     } else if (computerChoice == "paper" && playerChoice == "rock") {
-        alert("You lost! Better luck next time!")
+        computerScore++;
+        result.textContent = "You lost!" + checkVictory(playerScore, computerScore);
     } else if (computerChoice == "rock" && playerChoice == "scissors") {
-        alert("You lost! Better luck next time!")
+        computerScore++;
+        result.textContent = "You lost!" + checkVictory(playerScore, computerScore);
     } else if (computerChoice == "scissors" && playerChoice == "paper") {
-        alert("You lost! Better luck next time!")
+        computerScore++;
+        result.textContent = "You lost!" + checkVictory(playerScore, computerScore);
     } else if (computerChoice == "rock" && playerChoice == "paper") {
-        alert("You won! Nice job!")
+        playerScore++;
+        result.textContent = "You won!" + checkVictory(playerScore, computerScore);
     } else if (computerChoice == "paper" && playerChoice == "scissors") {
-        alert("You won! Nice job!")
+        playerScore++;
+        result.textContent = "You won!" + checkVictory(playerScore, computerScore);
     } else if (computerChoice == "scissors" && playerChoice == "rock") {
-        alert("You won! Nice job!")
+        playerScore++;
+        result.textContent = "You won!" + checkVictory(playerScore, computerScore);
     }
 }
 
+/*
 let active = true;
 while(active == true) {
     let keepPlaying = alert('Welcome to Rock Paper Scissors!');
     compareChoices(getComputerChoice(), getPlayerChoice());
 }
+*/
